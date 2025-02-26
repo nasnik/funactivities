@@ -1,0 +1,14 @@
+openapi: 3.0.0
+info:
+  title: Fun Activities API
+  description: API documentation for Fun Activities
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api
+paths:
+  /activities:
+    get:
+      summary: Get all activities
+      responses:
+        "200":
+          description: Success

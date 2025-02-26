@@ -1,0 +1,35 @@
+/* Full-screen container */
+.successPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    min-height: 100vh;
+    background: linear-gradient(to right, #fef3c7, #d9f99d);
+    padding: 20px;
+}
+
+/* Message container */
+.container {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
+
+/* Title */
+.title {
+    font-size: 28px;
+    color: #145a32;
+    margin-bottom: 15px;
+}
+
+/* Message */
+.message {
+    font-size: 18px;
+    color: #5d4500;
+}

@@ -1,0 +1,74 @@
+.activityGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.activityCard {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.activityCard:hover {
+    transform: translateY(-5px);
+    cursor: pointer;
+}
+
+.activityImage {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.activityContent {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.activityTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.activityDescription {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.activityInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.9rem;
+    color: #555;
+}
+@media (min-width: 1024px) {
+    .activityGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .activityGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .activityGrid {
+        grid-template-columns: 1fr;
+    }
+}
