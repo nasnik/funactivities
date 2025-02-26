@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #00acc1;
+    margin-bottom: 20px;
+}
+
+#logon-register, #logon-div, #register-div, #activities, #edit-activity {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+
+#logon, #register {
+    background-color: #00acc1;
+    color: white;
+}
+
+
+#logon-cancel, #register-cancel, #edit-cancel {
+    background-color: #ffeb3b;
+    color: black;
+}
+
+#add-activity, #adding-activity {
+    background-color: #00acc1; /* Bluish */
+    color: white;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#activities-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#activities-table th, #activities-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#activities-table th {
+    background-color: #ffeb3b;
+    color: black;
+}
+
+#activities-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+#message {
+    text-align: center;
+    margin-top: 10px;
+    color: red;
+}
+
+hr {
+    margin: 20px 0;
+    border: 1px solid #00acc1; /* Bluish */
+}
