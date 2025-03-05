@@ -47,7 +47,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(
     cors({
-        origin: "http://localhost:5173", // Allow requests from frontend
+        origin: process.env.BASE_URL_FRONT, // Allow requests from frontend
         credentials: true, // Allow credentials (cookies, authorization headers, etc.)
         methods: "GET,POST,PUT,DELETE,PATCH", // Allow specific HTTP methods
         allowedHeaders: "Content-Type,Authorization", // Allow required headers

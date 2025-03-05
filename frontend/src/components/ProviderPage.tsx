@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./ProviderPage.module.css";
 import CreateActivityModal from "./CreateActivityModal";
+const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 interface Activity {
     _id: string;
@@ -21,7 +22,7 @@ const ProviderPage: React.FC = () => {
     const [providerName, setProviderName] = useState<string>("");
     const [activities, setActivities] = useState<Activity[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  //  const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [editingActivity, setEditingActivity] = useState<Activity | null>(null);
 
     const fetchProviderDetails = async () => {
@@ -29,7 +30,7 @@ const ProviderPage: React.FC = () => {
             const token = localStorage.getItem("token");
             if (!token) throw new Error("No authentication token found");
 
-            const providerRes = await axios.get(`http://localhost:3000/api/v1/provider/${providerId}`, {
+            const providerRes = await axios.get(`${baseUrl}/provider/${providerId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -37,7 +38,7 @@ const ProviderPage: React.FC = () => {
             console.log("Provider Name:", providerRes.data.provider.name);
             setProviderName(providerRes.data.provider.name);
 
-            const activitiesRes = await axios.get(`http://localhost:3000/api/v1/activities/provider/${providerId}`, {
+            const activitiesRes = await axios.get(`${baseUrl}/activities/provider/${providerId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -58,14 +59,14 @@ const ProviderPage: React.FC = () => {
     };
 
 
-    const handleFileUpload = async () => {
+/*    const handleFileUpload = async () => {
         if (!selectedFile) return;
 
         const formData = new FormData();
         formData.append("image", selectedFile);
 
         try {
-            const response = await axios.post(`http://localhost:3000/api/v1/providers/${providerId}/upload`, formData, {
+            const response = await axios.post(`${baseUrl}/providers/${providerId}/upload`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -76,14 +77,14 @@ const ProviderPage: React.FC = () => {
         } catch (error) {
             console.error("Error uploading file:", error);
         }
-    };
+    };*/
 
     const handleDeleteActivity = async (activityId: string) => {
         try {
             const token = localStorage.getItem("token");
             if (!token) throw new Error("No authentication token found");
 
-            await axios.delete(`http://localhost:3000/api/v1/activities/${activityId}`, {
+            await axios.delete(`${baseUrl}/activities/${activityId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
