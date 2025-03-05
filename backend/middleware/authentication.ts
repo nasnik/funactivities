@@ -2,27 +2,29 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { UnauthenticatedError } from '../errors';
 
-interface AuthenticatedRequest extends Request {
-    user?: { userId: string; name: string };
+export interface AuthenticatedRequest extends Request {
+    user?: { userId: string; name: string; role?: string };
 }
 
 const auth = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-    // Check for Authorization header
     const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        throw new UnauthenticatedError('Authentication invalid');
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        throw new UnauthenticatedError("Authentication invalid");
     }
 
-    const token = authHeader.split('Bearer ')[1];
+    const token = authHeader.split("Bearer ")[1];
 
     try {
-        const payload = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string; name: string };
+        const payload = jwt.verify(token, process.env.JWT_SECRET as string) as {
+            userId: string;
+            name: string;
+            role?: string;
+        };
 
-        // Attach user info to request object
-        req.user = { userId: payload.userId, name: payload.name };
+        req.user = { userId: payload.userId, name: payload.name, role: payload.role };
         next();
     } catch (err) {
-        throw new UnauthenticatedError('Authentication invalid');
+        throw new UnauthenticatedError("Authentication invalid");
     }
 };
 
