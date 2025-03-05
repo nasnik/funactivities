@@ -35,10 +35,13 @@ export const registerUser = async (req: AuthRequest, res: Response) => {
         throw new BadRequestError("Email is already in use.");
     }
 
-    const user = await User.create({ name, email, password });
+    const user = await User.create({ name, email, password, role: "user" });
     const token = user.createJWT();
 
-    res.status(StatusCodes.CREATED).json({ user: { name: user.name, email: user.email }, token });
+    res.status(StatusCodes.CREATED).json({
+        user: { name: user.name, email: user.email, role: user.role },
+        token
+    });
 };
 
 // **Provider Registration**
@@ -59,7 +62,7 @@ export const registerProvider = async (req: ProviderRequest, res: Response) => {
     }
 
     const provider = await User.create({
-        name: providerName, // Store providerName in the name field
+        name: providerName,
         email,
         password,
         role: "provider",
