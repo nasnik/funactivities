@@ -1,25 +1,24 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 
 interface Schedule {
-    date: Date;
-    time: {
-        start: string;
-        end: string;
-    };
+    day: string; // Day of the week (e.g., "Monday")
+    startDate: string; // Start date in YYYY-MM-DD format
+    time: string; // Time in HH:mm format
 }
 
 export interface IActivity extends Document {
     name: string;
-    description?: string;
+    location: string;
+    description: string;
+    imageUrl: string;
     ageGroup: {
         min: number;
         max: number;
     };
-    location: string;
-    schedule: Schedule[];
+    numOfMeetings: number;
     price: number;
+    schedule: Schedule[];
     createdBy: Types.ObjectId;
-    enrolledUsers: mongoose.Types.ObjectId[];
 }
 
 const ActivitySchema = new Schema<IActivity>(
@@ -32,6 +31,10 @@ const ActivitySchema = new Schema<IActivity>(
         description: {
             type: String,
             required: true,
+        },
+        imageUrl: {
+            type: String,
+            required: false,
         },
         ageGroup: {
             min: {
@@ -49,16 +52,15 @@ const ActivitySchema = new Schema<IActivity>(
         },
         schedule: [
             {
-                date: {
-                    type: Date,
-                    required: true,
-                },
-                time: {
-                    start: { type: String, required: true },
-                    end: { type: String, required: true },
-                },
+                day: { type: String, required: true },
+                startDate: { type: String, required: true },
+                time: { type: String, required: true },
             },
         ],
+        numOfMeetings: {
+            type: Number,
+            required: true,
+        },
         price: {
             type: Number,
             required: true,
@@ -68,12 +70,6 @@ const ActivitySchema = new Schema<IActivity>(
             ref: 'User',
             required: true,
         },
-        enrolledUsers: [
-            {
-                type: mongoose.Types.ObjectId,
-                ref: 'User',
-            },
-        ],
     },
     { timestamps: true }
 );

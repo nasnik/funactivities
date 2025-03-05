@@ -1,15 +1,31 @@
-import express from 'express';
-import { getAllActivities, getActivity, createActivity, updateActivity, deleteActivity } from '../controllers/activities';
+import express from "express";
+import {
+    getAllActivities,
+    getActivity,
+    createActivity,
+    updateActivity,
+    deleteActivity,
+    getActivitiesForHomepage,
+    getActivitiesByProvider,
+} from "../controllers/activities";
+import upload from "../middleware/upload";
 
 const router = express.Router();
 
-router.route('/')
-    .post(createActivity)
+// Fetch all activities (for homepage)
+router.get("/all", getActivitiesForHomepage);
+
+// Fetch activities for a specific provider
+router.get("/provider/:providerId", getActivitiesByProvider);
+
+// Standard CRUD operations for individual users/providers
+router.route("/")
+    .post(upload.single("image"), createActivity)
     .get(getAllActivities);
 
-router.route('/:id')
+router.route("/:id")
     .get(getActivity)
     .delete(deleteActivity)
-    .patch(updateActivity);
+    .patch(upload.single("image"), updateActivity);
 
 export default router;

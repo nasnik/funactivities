@@ -22,7 +22,7 @@
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 80%; /* Reduced width */
-    max-width: 600px; /* Makes it more compact */
+    max-width: 900px; /* Increased width for table */
 }
 
 .header {
@@ -44,6 +44,12 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
     background: rgba(255, 255, 255, 0.5);
     text-align: center;
+}
+
+.table th {
+    background: #ffcc00;
+    color: #5a3e00;
+    font-weight: bold;
 }
 
 .button {
@@ -85,12 +91,31 @@
     background: #c0392b;
 }
 
-.logoffButton {
-    position: absolute;
-    top: 20px;
-    right: 20px; /* Moved to top right */
-    background: #ffb300;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
+.uploadSection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+.uploadButton {
+    background: #007bff;
+    color: white;
+}
+
+.uploadButton:hover {
+    background: #0056b3;
+}
+
+.activityImage {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.noData {
+    text-align: center;
+    font-style: italic;
+    color: #666;
 }
