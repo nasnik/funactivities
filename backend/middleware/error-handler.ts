@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 const errorHandlerMiddleware = (
-    err: any, // Accepts any error type (or you can create a custom type)
+    err: any,
     req: Request,
     res: Response,
     next: NextFunction
@@ -25,7 +25,7 @@ const errorHandlerMiddleware = (
     }
 
     if (err.name === 'CastError') {
-        customError.message = `No item found with id: ${err.value}`;
+        customError.message = `Invalid ID format: ${err.value}`;
         customError.statusCode = 404;
     }
 

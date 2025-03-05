@@ -6,6 +6,7 @@ export interface IUser extends Document {
     name: string;
     email: string;
     password: string;
+    role: 'user' | 'provider' | 'admin';
     activitiesEnrolled: mongoose.Types.ObjectId[];
     createJWT(): string;
     comparePassword(candidatePassword: string): Promise<boolean>;
@@ -32,6 +33,11 @@ const UserSchema = new Schema<IUser>({
         required: [true, 'Please provide a password'],
         minlength: 6,
     },
+    role: {
+        type: String,
+        enum: ['user', 'provider', 'admin'],
+        default: 'user',
+    },
     activitiesEnrolled: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -42,6 +48,7 @@ const UserSchema = new Schema<IUser>({
 
 // Hash password before saving
 UserSchema.pre<IUser>('save', async function () {
+    if (!this.isModified('password')) return;
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
 });
@@ -56,7 +63,7 @@ UserSchema.methods.createJWT = function (): string {
     }
 
     return jwt.sign(
-        { userId: this._id, name: this.name },
+        { userId: this._id, name: this.name, role: this.role }, // Include role in JWT
         jwtSecret,
         { expiresIn: jwtLifetime }
     );
