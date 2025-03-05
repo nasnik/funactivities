@@ -1,16 +1,40 @@
 import { useState } from "react";
 import styles from "./Register.module.css";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 const Register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [verifyPassword, setVerifyPassword] = useState("");
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const handleSubmit = (e: React.FormEvent) => {
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({ name, email, password });
+        if (!name || !email || !password) {
+            setError("All fields are required.");
+            return;
+        }
+        setLoading(true);
+        try {`${baseUrl}/auth/register/user`
+            const response = await axios.post(
+                `${baseUrl}/auth/register/user`,
+                { name, email, password, verifyPassword }, {
+                    headers: {"Content-Type": "application/json"},
+                });
+            console.log("Registration successful:", response.data);
+            navigate("/login");
+        } catch (err: any) {
+            console.error("Registration failed:", err.response?.data?.message || err.message);
+            setError(err.response?.data?.message || "Something went wrong");
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -52,7 +76,9 @@ const Register = () => {
                     className={styles.input}
                     required
                 />
-                <button type="submit" className={styles.button}>Register</button>
+                <button type="submit" className={styles.button} disabled={loading}>
+                    {loading ? "Registering..." : "Register"}
+                </button>
             </form>
         </div>
     );
