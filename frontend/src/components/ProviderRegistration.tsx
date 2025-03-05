@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./ProviderRegistration.module.css";
+const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 const ProviderRegistration = () => {
     const [providerName, setProviderName] = useState("");
@@ -22,7 +23,7 @@ const ProviderRegistration = () => {
         setLoading(true);
         try {
             const response = await axios.post(
-                "http://localhost:3000/api/v1/auth/register/provider",
+                `${baseUrl}/auth/register/provider`,
                 { providerName, phone: phoneNumber, email, password, verifyPassword },
                 { withCredentials: true }
             );

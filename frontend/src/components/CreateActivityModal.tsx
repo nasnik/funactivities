@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./CreateActivityModal.module.css";
+const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 interface Activity {
     _id: string;
@@ -64,7 +65,7 @@ const CreateActivityModal: React.FC<CreateActivityModalProps> = ({
                 fileData.append("file", file);
 
                 const uploadResponse = await axios.post(
-                    `http://localhost:3000/api/v1/providers/${providerId}/upload`,
+                    `${baseUrl}/providers/${providerId}/upload`,
                     fileData,
                     {
                         headers: {
@@ -89,7 +90,7 @@ const CreateActivityModal: React.FC<CreateActivityModalProps> = ({
 
             if (editingActivity) {
                 await axios.patch(
-                    `http://localhost:3000/api/v1/activities/${editingActivity._id}`,
+                    `${baseUrl}/activities/${editingActivity._id}`,
                     activityData,
                     {
                         headers: {
@@ -100,7 +101,7 @@ const CreateActivityModal: React.FC<CreateActivityModalProps> = ({
                 );
             } else {
                 // Create new activity
-                await axios.post("http://localhost:3000/api/v1/activities", activityData, {
+                await axios.post(`${baseUrl}/activities`, activityData, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${localStorage.getItem("token")}`,

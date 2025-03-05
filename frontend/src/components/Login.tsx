@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosError } from "axios"; // Import AxiosError
 import styles from "./Login.module.css";
+
+const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 const Login = () => {
     const navigate = useNavigate();
@@ -12,7 +14,7 @@ const Login = () => {
     const handleLogin = async () => {
         setError("");
         try {
-            const response = await axios.post("http://localhost:3000/api/v1/auth/login", {
+            const response = await axios.post(`${baseUrl}/auth/login`, {
                 email,
                 password,
             });
@@ -42,7 +44,11 @@ const Login = () => {
                 }
             }
         } catch (error) {
-            setError(error.response?.data?.msg || "Login failed");
+            if (error instanceof AxiosError) {
+                setError(error.response?.data?.msg || "Login failed");
+            } else {
+                setError("Login failed");
+            }
         }
     };
 
